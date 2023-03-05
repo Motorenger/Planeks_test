@@ -4,3 +4,4 @@ sqlparse==0.4.3
 tzdata==2022.7
 psycopg2-binary
 django-crispy-forms==1.13
+django-debug-toolbar==3.8.1

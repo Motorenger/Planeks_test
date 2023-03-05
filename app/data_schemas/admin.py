@@ -4,7 +4,7 @@ from data_schemas.models import DataSchema, Column, DataType, Arguments
 
 
 class ColumnInline(admin.TabularInline):
-    model = DataSchema.columns.through
+    model = Column
 
 
 @admin.register(Column)
@@ -14,7 +14,6 @@ class DataSchemaAdmin(admin.ModelAdmin):
 
 @admin.register(DataSchema)
 class DataSchemaAdmin(admin.ModelAdmin):
-    exclude = ('columns',)
     inlines = [
         ColumnInline,
     ]

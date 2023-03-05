@@ -2,9 +2,99 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <form>
+<div class="">
+<form enctype="multipart/form-data" class="container" method="post" id="product_form">
     {% csrf_token %}
-    {{form}}    
-    </form>
+    <div class="card">
+        <div class="card-header card-header-secondary">
+            <h4 class="card-title">New Schema</h4>
+        </div>
+        {% for field in form %}
+            <div class="form-group card-body">
+                <label>{{field.label}}</label>
+                {% if field.field.required %}
+                    <span style="color: red;" class="required">*</span>
+                {% endif %}
+            
+                {{field}}
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% with columns_formset as formset %}
+        {{ formset.management_form }}
+        <script type="text/html" id="columns-template">
+            <tr id="columns-__prefix__" class="hide_all">
+                {% for fields in formset.empty_form.hidden_fields %}
+                    {{ fields }}
+                {% endfor %}
+            
+                {% for fields in formset.empty_form.visible_fields %}
+                    <td>{{fields}}</td>
+                {% endfor %}
+            </tr>
+        </script>
+        <div class="table-responsive card mt-4">
+            <div class="card-header card-header-secondary">
+                <h4 class="card-title">Columns</h4>
+            </div>
+            <table class="table card-header">
+                <thead class="text-secondary">
+                    <th>Name <span style="color: red;" class="required">*</span></th>
+                    <th>Type<span style="color: red;" class="required">*</span></th>
+                    <th>Order <span style="color: red;" class="required">*</span></th>
+                </thead>
+                <tbody id="item-columns">
+                    {% for error in formset.non_form_errors %}
+                        <span style="color: red">{{ error }}</span>
+                    {% endfor %}
+                    {% for formss in formset %}
+                        {{ formss.management_form }}
+                        <tr id="columns-{{ forloop.counter0 }}" class="hide_all">
+                            {{ formss.id }}
+                            {% for field in formss.visible_fields %}
+                                <td>
+                                    {{field}}
+                                    {% if field.extra_args %}{% endif %}
+                                    {% for error in field.errors %}
+                                        <span style="color: red">{{ error }}</span>
+                                    {% endfor %}
+                                
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="#" id="add-column-button" class="btn btn-secondary add-column">Add column</a>
+        </div>
+
+        {% endwith %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-secondary btn-block">Submit</button>
+        </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+<script>
+
+  $(document).ready(function() {
+
+      $('.add-column').click(function(ev) {
+          ev.preventDefault();
+          var count = $('#item-columns').children().length;
+          var tmplMarkup = $('#columns-template').html();
+          var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+          $('#item-columns').append(compiledTmpl);
+  
+          $('#id_columns-TOTAL_FORMS').attr('value', count+1);
+      });
+  });
+</script>
+</div>
 
 {% endblock content %}

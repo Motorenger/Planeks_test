@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+<table class="table table-bordered table-striped container mt-5">
+  <thead class="">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Modified</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for schema in schemas %}
+    <tr>
+      <td><a href="{% url 'data_schemas:detail' schema.pk %}">{{ schema.name }}</a></td>
+      <td>{{ schema.modified }}</td>
+      <td><a href="{% url 'data_schemas:delete' schema.pk %}">Delete</a>    |   <a href="{% url 'data_schemas:update' schema.pk %}">Edit</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

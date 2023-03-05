@@ -19,13 +19,11 @@ class DataType(models.Model):
 
 
 class Column(models.Model):
-    class DataTypes(models.TextChoices):
-        MOVIE = 'MOVIE', 'Movie'
-        SERIES = 'SERIES', 'Series'
 
     name = models.CharField(max_length=50)
     data_type = models.ForeignKey(DataType, on_delete=models.CASCADE)
     order = models.IntegerField()
+    schema = models.ForeignKey("DataSchema", on_delete=models.CASCADE, related_name="columns")
 
     class Meta:
         verbose_name = _('Column')
@@ -39,7 +37,6 @@ class Column(models.Model):
 class DataSchema(models.Model):
     name = models.CharField(max_length=50)
     modified = models.DateField(auto_now=True)
-    columns = models.ManyToManyField(Column)
 
     class Meta:
         verbose_name = _('DataSchema')

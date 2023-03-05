@@ -20,9 +20,11 @@ INSTALLED_APPS = [
     # Local
     'users.apps.UsersConfig',
     'data_schemas.apps.DataSchemasConfig',
+    'data_sets.apps.DataSetsConfig',
 
     # 3-d party
     'crispy_forms',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -32,6 +34,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -99,3 +102,6 @@ LOGIN_REDIRECT_URL = "data_schemas:index"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
+}

@@ -1,0 +1,64 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div style="" class="col">
+    <h4 style="">Sample Schema</h4>
+
+
+    <table style="" class="table table-bordered table-striped">
+  <thead class="">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Order</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for column in columns %}
+    <tr>
+      <td>{{ column.name }}</td>
+      <td>{{ column.data_type }}</td>
+      <td>{{ column.order }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </div>
+  
+  </div>
+</div>
+
+
+  <div class="row">
+        <div class="col">
+
+
+
+    <table style="" class="table table-bordered table-striped">
+          <h4 style="">Data Sets</h4>
+  <thead class="">
+    <tr>
+      <th scope="col">Created</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if data_sets %}
+    {% for data_set in data_sets %}
+    <tr>
+      <td>{{ data_set.created }}</td>
+      <td>{{ data_set.status }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+        <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    {% endif %}
+  </tbody>
+  </div>
+</div>
+</div>
+{% endblock content %}
