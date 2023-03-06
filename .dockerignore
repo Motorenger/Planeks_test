@@ -4,3 +4,4 @@ Pipfile.lock
 README.md
 docker-compose.yml
 config/env/
+media/
