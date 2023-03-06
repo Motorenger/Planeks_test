@@ -41,6 +41,6 @@ class DataSchema(models.Model):
     class Meta:
         verbose_name = _('DataSchema')
         verbose_name_plural = _('DataSchemas')
-    
+
     def __str__(self):
         return self.name

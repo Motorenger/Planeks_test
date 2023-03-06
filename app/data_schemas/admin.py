@@ -8,7 +8,7 @@ class ColumnInline(admin.TabularInline):
 
 
 @admin.register(Column)
-class DataSchemaAdmin(admin.ModelAdmin):
+class ColumnAdmin(admin.ModelAdmin):
     fields = ("name", "data_type", "order")
 
 

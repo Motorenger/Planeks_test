@@ -22,7 +22,7 @@ def create_dataset(request, pk, *args, **kwargs):
 
 
 def download_data_set(request, pk):
-    # fill these variables with real values
+
     data_set = get_object_or_404(DataSet, pk=pk)
 
     with open(data_set.data_set_path, 'r') as f:

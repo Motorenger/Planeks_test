@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, View, ListView, DetailView
-from django.views.generic.edit import FormView, CreateView, DeleteView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from data_schemas.forms import DataSchemaForm, ColumnFormSet
 from data_schemas.models import DataSchema
@@ -25,8 +25,8 @@ class DataSchemaDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["columns"] = self.object.columns.select_related() 
-        context["data_sets"] = self.object.data_sets.all() 
+        context["columns"] = self.object.columns.select_related()
+        context["data_sets"] = self.object.data_sets.all()
         context["form"] = CreateDataSetForm()
         return context
 

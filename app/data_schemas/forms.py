@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from data_schemas.models import DataSchema, Column, DataType
+from data_schemas.models import DataSchema, Column
 
 
 class DataSchemaForm(forms.ModelForm):
