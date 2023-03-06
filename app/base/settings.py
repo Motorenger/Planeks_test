@@ -105,3 +105,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
 }
+
+REDIS_HOST = os.environ.get('REDIS_HOST')
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:6379'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:6379'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'data_sets'

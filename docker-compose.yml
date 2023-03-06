@@ -20,6 +20,18 @@ services:
       - ./config/env/db.env
     ports:
       - 5432:5432
-
+  redis:
+    image: redis:alpine
+  celery:
+    build:
+      context: .
+      dockerfile: ./config/celery/Dockerfile
+    command: celery -A base worker -l INFO
+    volumes:
+      - ./app/:/usr/src/app/
+    env_file:
+      - ./config/env/.env
+    depends_on:
+      - redis
 volumes:
   postgres_data:

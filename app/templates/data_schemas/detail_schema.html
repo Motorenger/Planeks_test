@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
@@ -27,12 +28,11 @@
   </div>
   
   </div>
-</div>
+
 
 
   <div class="row">
         <div class="col">
-
 
 
     <table style="" class="table table-bordered table-striped">
@@ -41,6 +41,7 @@
     <tr>
       <th scope="col">Created</th>
       <th scope="col">Status</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -48,16 +49,55 @@
     {% for data_set in data_sets %}
     <tr>
       <td>{{ data_set.created }}</td>
-      <td>{{ data_set.status }}</td>
+      <td>{% if data_set.status %}
+          Ready
+        {% else %}
+        Processing
+        {% endif %}
+      </td>
+      {% if data_set.status %}
+          <td><a href="{% url 'data_sets:download' data_set.pk %}">Download</a></td>
+        {% endif %}
+
     </tr>
     {% endfor %}
     {% else %}
-        <tr>
-      <td></td>
+    <tr>
+
       <td></td>
     </tr>
     {% endif %}
   </tbody>
+  </div>
+</div>
+
+
+<div class="row mb-3">
+        <div class="col">
+    <form id="create-dataset">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-success" value="Create">
+    </form>
+
+<script>
+$("#create-dataset").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'data_sets:create' schema.pk %}",
+            data: serializedData,
+             success: function(response) {
+            window.location.reload();
+  },
+        })
+    })
+
+</script>
   </div>
 </div>
 </div>

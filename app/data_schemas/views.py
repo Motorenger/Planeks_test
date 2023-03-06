@@ -5,6 +5,7 @@ from django.views.generic.edit import FormView, CreateView, DeleteView, UpdateVi
 
 from data_schemas.forms import DataSchemaForm, ColumnFormSet
 from data_schemas.models import DataSchema
+from data_sets.forms import CreateDataSetForm
 
 
 class IndexView(TemplateView):
@@ -26,6 +27,7 @@ class DataSchemaDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["columns"] = self.object.columns.select_related() 
         context["data_sets"] = self.object.data_sets.all() 
+        context["form"] = CreateDataSetForm()
         return context
 
 
